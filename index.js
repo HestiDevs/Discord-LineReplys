@@ -2,6 +2,7 @@ const { Client, Collection } = require("discord.js");
 const client = new Client();
 const fs = require("fs");
 const config = require("./config.json");
+require('./replys/main.js');
 
 client.commands = new Collection();
 
@@ -34,6 +35,7 @@ client.on('message', async (message) => {
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.alias && cmd.alias.includes(commandName));
+    if(!command) return;
 
     command.run(client, message, args);
 });
